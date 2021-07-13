@@ -1,0 +1,51 @@
+--infilesdir static/in
+--outdir static/out
+--audio 1
+--stack 0
+--facedown 0
+--watermark 1
+--multiprocess 0
+--period 1
+--method linpol
+--clip 0
+--supsamp 2
+--interp linear
+--skip 0
+--jpg 0
+
+
+
+--------Option description--------
+--infilesdir
+Input directory.
+
+--outdir
+Output directory.
+
+--audio
+1: Add audio to dewarped video; 0: No added.
+
+--stack
+Dewarped video mode. 0: stack mode; 1: road only; 2: driver only.
+
+--facedown
+1: Camera is installed in facedown style; 0: Camera is installed in faceup style.
+
+--watermark
+1: Display the watermark of GPS and date in dewarped video; 0: Not displayed.
+
+--multiprocess
+1: Using multiple CPUs to speed up processing; 0: Not used.
+
+--jpg
+1: output jpgs with frame nums; 0: output mp4.
+
+--skip
+1: skip if output file already exists; 0: Not skipped.
+
+--period
+Period in frames to export.
+
+--supsamp
+What factor to scale images for supersampling
+
