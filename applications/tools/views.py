@@ -48,7 +48,17 @@ def out(request):
     USERNAME = "ftpdocker@docker.ingenioitc.com"
     PASSWORD = "c4nd4d0$"
 
-    
+    ftp = ftplib.FTP(HOSTNAME)
+    ftp.login(USERNAME,PASSWORD)
+    ftp.set_pasv(False)
+    filename='1-d.mp4'
+    localfile='static/out/'
+    remotefile='/out/'
+    ftp.cwd(remotefile)
+    ftp.storbinary("STOR %s" %filename, open("%s%s" % (localfile,filename),'rb'))
+
+
+
 
 
     return HttpResponse('<h1>Video subido correctamente</h1>')
