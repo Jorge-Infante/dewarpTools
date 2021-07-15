@@ -7,6 +7,6 @@ from applications.tools import views
 app_name = "tools_app"
 
 urlpatterns = [
-    path('entrada/',views.entrada, name='datos'),
-    path('salida/',views.salida, name='out'),
+    path('entrada/<str:name>/',views.entrada, name='datos'),
+    path('salida/<str:nombre>/',views.salida, name='salida'),
 ]

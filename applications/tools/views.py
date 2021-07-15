@@ -9,6 +9,8 @@ import getpass
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string 
+from django.shortcuts import redirect
+from django.http import JsonResponse
 
 #Json
 from django.http import JsonResponse
@@ -16,36 +18,37 @@ from django.http import JsonResponse
 #Funciones
 from . dewarp import ejecutar 
 
-import shutil
-import urllib.request as request2
-from contextlib import closing
 
 
 
-def entrada(request):
+def entrada(request, name):
     #Descarga normal
     # url_link = "https://ingenioitc.com/mipg/34.mp4"
     # urllib.request.urlretrieve(url_link, 'static/in/1.mp4') 
 
     #Descarga ftp
-    
-    HOSTNAME = "ftp.ingenioitc.com"
-    USERNAME = "ftpdocker@docker.ingenioitc.com"
-    PASSWORD = "c4nd4d0$"
+    if request.method == 'GET':
+        nombre=name
 
-    ftp = ftplib.FTP(HOSTNAME)
-    ftp.login(USERNAME,PASSWORD)
-    ftp.set_pasv(False)  
-    remotefile='/in/entra1.mp4'
-    download='static/in/entrada1.mp4'
-    with open(download, 'wb') as file:
-        ftp.retrbinary('RETR %s' %remotefile, file.write )
+        HOSTNAME = "ftp.ingenioitc.com"
+        USERNAME = "ftpdocker@docker.ingenioitc.com"
+        PASSWORD = "c4nd4d0$"
+
+        ftp = ftplib.FTP(HOSTNAME)
+        ftp.login(USERNAME,PASSWORD)
+        ftp.set_pasv(False)  
+        remotefile='/in/'+nombre+'.mp4'
+        download='static/in/'+nombre+'.mp4'
+        with open(download, 'wb') as file:
+            ftp.retrbinary('RETR %s' %remotefile, file.write )
 
 
-    ejecutar()
-    return HttpResponse('<h1>Video renderizado correctamente </h1>')
+        # ejecutar()
+        data=salida(request,nombre) 
+    return JsonResponse(data)
 
-def salida(request):
+def salida(request,nombre):
+    print(nombre)
 
     HOSTNAME = "ftp.ingenioitc.com"
     USERNAME = "ftpdocker@docker.ingenioitc.com"
@@ -54,17 +57,18 @@ def salida(request):
     ftp = ftplib.FTP(HOSTNAME)
     ftp.login(USERNAME,PASSWORD)
     ftp.set_pasv(False)
-    filename='entrada1-d.mp4'
+    filename=nombre+'-d.mp4'
     localfile='static/out/'
     remotefile='/out/'
     ftp.cwd(remotefile)
     ftp.storbinary("STOR %s" %filename, open("%s%s" % (localfile,filename),'rb'))
 
 
+    responseData = {
+        'url': 'https://docker.ingenioitc.com/out/'+filename
+    }
 
-
-
-    return HttpResponse('<h1>Video subido correctamente</h1>')
+    return responseData
 
 
 
