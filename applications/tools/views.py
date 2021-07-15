@@ -9,6 +9,10 @@ import getpass
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string 
+
+#Json
+from django.http import JsonResponse
+
 #Funciones
 from . dewarp import ejecutar 
 
@@ -18,11 +22,13 @@ from contextlib import closing
 
 
 
-def correr(request):
-
+def entrada(request):
+    #Descarga normal
     # url_link = "https://ingenioitc.com/mipg/34.mp4"
     # urllib.request.urlretrieve(url_link, 'static/in/1.mp4') 
-    # ejecutar()
+
+    #Descarga ftp
+    
     HOSTNAME = "ftp.ingenioitc.com"
     USERNAME = "ftpdocker@docker.ingenioitc.com"
     PASSWORD = "c4nd4d0$"
@@ -35,14 +41,11 @@ def correr(request):
     with open(download, 'wb') as file:
         ftp.retrbinary('RETR %s' %remotefile, file.write )
 
-    
 
-    # with closing(request2.urlopen('ftp://tpdocker@docker.ingenioitc.com:c4nd4d0$@ftp.ingenioitc.com/in/', 'file')) as r:
-    #     with open('file', 'wb') as f:
-    #         shutil.copyfileobj(r, f)
+    ejecutar()
     return HttpResponse('<h1>Video renderizado correctamente </h1>')
 
-def out(request):
+def salida(request):
 
     HOSTNAME = "ftp.ingenioitc.com"
     USERNAME = "ftpdocker@docker.ingenioitc.com"
@@ -51,7 +54,7 @@ def out(request):
     ftp = ftplib.FTP(HOSTNAME)
     ftp.login(USERNAME,PASSWORD)
     ftp.set_pasv(False)
-    filename='1-d.mp4'
+    filename='entrada1-d.mp4'
     localfile='static/out/'
     remotefile='/out/'
     ftp.cwd(remotefile)
