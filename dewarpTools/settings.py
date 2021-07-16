@@ -67,16 +67,7 @@ WSGI_APPLICATION = 'dewarpTools.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dewarptools',
-        'USER': 'jorge',
-        'PASSWORD': 'nf2122',
-        'HOST': 'localhost',
-        'PORT': '5433',
-    }
-}
+
 
 
 # Password validation

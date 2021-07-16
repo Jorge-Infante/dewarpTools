@@ -43,7 +43,7 @@ def entrada(request, name):
             ftp.retrbinary('RETR %s' %remotefile, file.write )
 
 
-        # ejecutar()
+        ejecutar()
         data=salida(request,nombre) 
     return JsonResponse(data)
 
